@@ -7,12 +7,13 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm, HT
 #from mongoengine import Document,StringField
 from enum import unique
 from pymongo.errors import DuplicateKeyError
+import config
 
 
 security = HTTPBasic()
 app=FastAPI()
-client=MongoClient("mongodb://localhost:27017/")
-db=client["Userinfo"]
+client=MongoClient(config.database_server)
+db=client[config.database]
 mycoll=db["proo"]
 pwd_context=CryptContext(schemes=["bcrypt"],deprecated="auto")
 oauth_scheme=OAuth2PasswordBearer(tokenUrl="token")
@@ -30,8 +31,8 @@ def welcome(token:str=Depends(oauth_scheme)):
 @app.post("/sign_up",tags=["Authentication"])
 
 async def sign_up(new_user:New_user,credentials: HTTPBasicCredentials = Depends(security)):
-    correct_username = secrets.compare_digest(credentials.username, "hel")
-    correct_password = secrets.compare_digest(credentials.password, "say")
+    correct_username = secrets.compare_digest(credentials.username, config.sign_up_username)
+    correct_password = secrets.compare_digest(credentials.password, config.sign_up_password)
     if not (correct_username and correct_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Incorrect email or password",headers={"WWW-Authenticate": "Basic"},)
     else:
