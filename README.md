@@ -30,17 +30,18 @@
   # 3. Install python requirements:
         `pip install -r requirements.txt`
         
-+  Open the  pycharm application
+# To execute, Open the  pycharm application
      
 +  Run the main.py 
           (We need uvicorn server to run Fastapi and  need to use localhost ip with portnumber.)
-         + To run this we have two mathod:-
-             + 1. configure run by importing module uvicorn)
-             + 2. use uvicorn comman (uvicorn main:app --reaload)
+         
+   + To run this we have two mathod:-
+        + 1. configure run by importing module uvicorn)
+        + 2. use uvicorn comman (uvicorn main:app --reaload)
        
-+ 6. Check 127.0.0.1/docs by using any system browser
++  Check 127.0.0.1/docs by using any system browser
   
-+ 7. when you visit this address then you find padlock sign in corner(represent that it's locked).
++  when you visit this address then you find padlock sign in corner(represent that it's locked).
    
 # 8. Sign_UP  At this endpint
        + where we can store data(username and passwoerd for sign_in) into MongoDB.
