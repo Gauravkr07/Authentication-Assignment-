@@ -1,0 +1,6 @@
+Python3
+pymongo
+FastAPI
+Pycharm
+MongoDB
+
