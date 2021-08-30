@@ -1,6 +1,4 @@
-Python3
+Fastapi
 pymongo
-FastAPI
-Pycharm
-MongoDB
+uvicorn
 
