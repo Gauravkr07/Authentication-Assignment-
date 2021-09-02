@@ -16,6 +16,8 @@
     +   passlib.context
     +   fastapi.security
     +   config module(containing environment variable) 
+    +   jose
+    +   datetime
 -   MongoDB
 -   git
    
@@ -47,13 +49,13 @@
 +  when you visit this address then you find padlock sign in corner(represent that it's locked).
    
 # 6. Sign_UP  At this endpint
-       + where we can store data(username and passwoerd for sign_in) into MongoDB.
-       + username and password received in plain form but password stored in hash format.
-       + you need api authentication username and password to store these data in database.
+       + where we can store data(username(in email format) and password for sign_in into MongoDB.
+       + username  are in email format and password received in plain form but password stored in hash format.
+       + you need api BASIC Authentication credentials, to store these username and password  data in MongoDB database.
     
         
 # 7. sign_in At this endpoint
        + at first you have to enter username 
        + if username found then you have to enter password
-       + Then authenticate fun match username with password
-       + if matched then it generate token otherwise return error.
+       + Then authenticate function match username with password
+       + if matched then it generate jwt token otherwise raise error.
