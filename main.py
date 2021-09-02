@@ -11,12 +11,13 @@ from datetime import timedelta,datetime
 from jose import jwt
 
 
+
 """In this project,we created two type of authentication system 
             1. by using module of HTTPBasicCredenticls from Fastapi.security library
             2. by creating token after verifing username and password                       
 """
-SECRET_KEY="09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
+SECRET_KEY=config.tokenkey
+ALGORITHM =config.algorithm
 security = HTTPBasic()
 app=FastAPI()
 client=MongoClient(config.database_server)
@@ -27,8 +28,8 @@ oauth_scheme=OAuth2PasswordBearer(tokenUrl="token")
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 class New_user(BaseModel):
-    """here this model take username and password """
-    username:str
+    """here this model take username(Email only) and password """
+    username:EmailStr
     password:str
 
 
@@ -75,31 +76,23 @@ def create_access_token(data:dict,expires_delta=timedelta):
 
 @app.post("/token",tags=["Authentication"])
 async def sign_in(form_data:OAuth2PasswordRequestForm=Depends()):
-    """At this we check username username and password stored in database are same or not"""
+    """At this endpoint, token generated if credentials are correct"""
     username=form_data.username
     password=form_data.password
     user = mycoll.find_one({"username": username})
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect username ")
-    if verify_password(password, (mycoll.find_one(password))):
+
+    l=mycoll.find_one({"username":username},{"password":1,"_id":0})
+    j=list(*l.items())
+    k=j[1]
+    check=verify_password(password,k )
+
+    if check==True:
         access_token=create_access_token(data={ "sub":username},expires_delta=timedelta(minutes=30))
         return {"access_token":access_token, "token_type": "bearer"}
+    else:
+        raise  HTTPException(status_code=404,detail="Password in misstyped,Retype again!")
 
-
-
-async def verify_password(plain_password, hashed_password):
-    return await pwd_context.verify(plain_password, hashed_password)
-
-
-"""async def authenticate(username,password):
-   user= db.get({username})
-   if not user:
-       raise HTTPException(status_code=400, detail="Incorrect username or password")
-   else:
-
-        #mycoll.aggregate()
-        veri= pwd_context.verify(password,**(mycoll.find_one(username,password)))
-        return {"access_token":username,"token_type":"bearer"}
-"""
-
-
+def verify_password(plain_password,hashed_password):
+     return pwd_context.verify(plain_password, hashed_password)
