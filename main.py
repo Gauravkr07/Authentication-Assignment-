@@ -37,16 +37,9 @@ class New_user(BaseModel):
 
 
 @app.post("/sign_up",tags=["Authentication"])
-async def sign_up(new_user:New_user,credentials: HTTPBasicCredentials = Depends(security)):
+async def sign_up(new_user:New_user):
     """At this endpoint, we are using fastapi authentication system to store username and password in database"""
-    """Here we are using one fixed password and username to store data in database"""
-    """that username and password are stored in config module"""
-    correct_username = secrets.compare_digest(credentials.username, config.sign_up_username)
-    correct_password = secrets.compare_digest(credentials.password, config.sign_up_password)
-    if not (correct_username and correct_password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,detail="Incorrect username or password",headers={"WWW-Authenticate": "Basic"},)
-    else:
-        try:
+        try
             """Enter username """
             mycoll.insert({"username":new_user.username ,"password":hasshing(new_user.password)})
             return {"Successfully Registered"}
