@@ -51,7 +51,7 @@
 # 6. Sign_UP  At this endpint
        + where we can store data(username(in email format) and password for sign_in into MongoDB.
        + username  are in email format and password received in plain form but password stored in hash format.
-       + you need api BASIC Authentication credentials, to store these username and password  data in MongoDB database.
+  
     
         
 # 7. sign_in At this endpoint
