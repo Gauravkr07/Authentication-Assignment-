@@ -2,7 +2,7 @@
    
   
 ## Aim: 
-      in this , we created authentication system on endpoint of FastAPI .
+      in this ,we created authentication system on endpoint of FastAPI .
       
 # Requirements:
 
@@ -27,13 +27,13 @@
         git clone "https://github.com/Gauravkr02/Authentication-Assignment-"
     
   # 2. Change the directory into the repository:
-        'cd ./`Authentication-Assignment-'
+        cd ./`Authentication-Assignment-'
        
   # 3. Create python virtual environment
-        "python3 -m venv ./ver_env"
+        python3 -m venv ./ver_env
    
   # 4. Install python requirements:
-        `pip install -r requirements.txt`
+        pip install -r requirements.txt
         
   # 5. To execute, Open the  pycharm application
      
